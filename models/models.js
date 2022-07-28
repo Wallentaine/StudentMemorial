@@ -13,17 +13,12 @@ const Memorial = sequelize.define('memorial', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     date: {type: DataTypes.DATE, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
+    form: {type: DataTypes.STRING, allowNull: false}
 })
 
 const Message = sequelize.define('message', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     message: {type: DataTypes.STRING, allowNull: false}
-})
-
-const Form = sequelize.define('form', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    form: {type: DataTypes.STRING, allowNull: false},
-    color: {type: DataTypes.STRING, allowNull: false}
 })
 
 User.hasOne(Memorial)
@@ -35,12 +30,8 @@ Message.belongsTo(User)
 Memorial.hasMany(Message)
 Message.belongsTo(Memorial)
 
-Form.hasOne(Memorial)
-Memorial.belongsTo(Form)
-
 module.exports = {
     User,
     Memorial,
     Message,
-    Form,
 }
