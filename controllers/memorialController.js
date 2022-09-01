@@ -1,4 +1,4 @@
-const {Memorial} = require('../models/models')
+const {Memorial} = require('../models/Memorial')
 const ApiError = require('../error/ApiError')
 const Sequelize = require('sequelize')
 
@@ -25,7 +25,7 @@ class MemorialController {
 
     async getRandomMemorials(req, res, next) {
         try {
-            const limit = 13
+            const limit = 16
             const memorials = await Memorial.findAll({order:[Sequelize.literal('RANDOM()')], limit})
 
             if (!memorials) return next(ApiError.internal("Что-то пошло не так!"))
