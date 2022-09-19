@@ -38,11 +38,11 @@ class MemorialController {
 
     async getOneMemorial(req, res, next) {
         try {
-            const {userId} = req.params
+            const {memorialId} = req.params
 
-            if (!userId) return next(ApiError.badRequest("Не был передан UserId!"))
+            if (!memorialId) return next(ApiError.badRequest("Не был передан MemorialId!"))
 
-            const memorial = await Memorial.findOne({where: {userId}})
+            const memorial = await Memorial.findOne({where: {id: memorialId}})
 
             if (!memorial) return next(ApiError.notFound("Мемориал не найден!"))
 

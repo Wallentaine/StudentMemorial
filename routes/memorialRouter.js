@@ -4,7 +4,7 @@ const memorialController = require('../controllers/memorialController')
 
 router.post('/', memorialController.createMemorial)
 router.get('/', memorialController.getRandomMemorials)
-router.get('/:userId', memorialController.getOneMemorial)
+router.get('/:memorialId', memorialController.getOneMemorial)
 
 
 module.exports = router
