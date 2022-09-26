@@ -72,6 +72,7 @@ class UserController {
             next(ApiError.internal(e.message))
         }
     }
+
 }
 
 module.exports = new UserController()

@@ -5,7 +5,7 @@ const {Message} = require("./Message")
 User.hasOne(Memorial)
 Memorial.belongsTo(User)
 
-User.hasOne(Message)
+User.hasMany(Message)
 Message.belongsTo(User)
 
 Memorial.hasMany(Message)

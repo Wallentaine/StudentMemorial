@@ -51,6 +51,21 @@ class MemorialController {
             next(ApiError.internal(e.message))
         }
     }
+    async getMemorialByUserId(req, res, next) {
+        try {
+            const {userId} = req.params
+
+            if (!userId) return next(ApiError.badRequest("Не был передан userId!"))
+
+            const memorial = await Memorial.findOne({where: {userId}})
+
+            if (!memorial) return next(ApiError.notFound("Мемориал не найден!"))
+
+            return res.json(memorial)
+        } catch (e) {
+            next(ApiError.internal(e.message))
+        }
+    }
 }
 
 module.exports = new MemorialController()
