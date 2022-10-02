@@ -1,19 +1,20 @@
 const {Memorial} = require('../models/Memorial')
 const ApiError = require('../error/ApiError')
 const Sequelize = require('sequelize')
+const {Op} = require('sequelize')
 
 class MemorialController {
     async createMemorial(req, res, next) {
         try {
-            const {userId, date, description, form} = req.body
+            const {userId, name, date, description, form} = req.body
 
-            if (!userId || !date || !description || !form) return next(ApiError.badRequest("Не были переданы нужные параметры!"))
+            if (!userId || !name || !date || !description || !form) return next(ApiError.badRequest("Не были переданы нужные параметры!"))
 
             const exist = await Memorial.findOne({where: {userId}})
 
             if (exist) return next(ApiError.badRequest("Этот пользователь уже увековечил себя в памяти!"))
 
-            const memorial = await Memorial.create({userId, date, description, form})
+            const memorial = await Memorial.create({userId, name, date, description, form})
 
             if (!memorial) return next(ApiError.internal("Что-то пошло не так!"))
 
@@ -29,6 +30,26 @@ class MemorialController {
             const memorials = await Memorial.findAll({order:[Sequelize.literal('RANDOM()')], limit})
 
             if (!memorials) return next(ApiError.internal("Что-то пошло не так!"))
+
+            return res.json(memorials)
+        } catch (e) {
+            next(ApiError.internal(e.message))
+        }
+    }
+
+    async searchMemorials(req, res, next) {
+        try {
+            const {desired} = req.params
+
+            const memorials = await Memorial.findAll({
+                where: {
+                    name: {
+                        [Op.substring]: desired
+                    }
+                }
+            })
+
+            if (!memorials) return next(ApiError.notFound("Ничего не было найдено"))
 
             return res.json(memorials)
         } catch (e) {

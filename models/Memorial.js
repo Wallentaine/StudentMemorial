@@ -6,7 +6,7 @@ const Memorial = sequelize.define('memorial', {
     name: {type: DataTypes.STRING, allowNull: false},
     date: {type: DataTypes.DATE, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
-    form: {type: DataTypes.STRING, allowNull: false}
+    form: {type: DataTypes.TEXT, allowNull: false}
 })
 
 module.exports = {
